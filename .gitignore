@@ -1,0 +1,6 @@
+# duel-game-core framework clone (path dependency of every game here; see each README)
+/duel-core/
+node_modules/
+.icp/
+.mops/
+dist/

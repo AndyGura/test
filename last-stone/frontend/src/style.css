@@ -1,0 +1,105 @@
+/* Last Stone-specific visuals, layered on duel-game-core.css (loaded
+ * first), which supplies the page chrome and the custom properties --bg,
+ * --panel, --panel-2, --line, --ink, --muted, --accent, --red, --green,
+ * --blue.
+ */
+
+.ls-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 1rem 1rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.ls-count {
+  font-size: 1.05rem;
+}
+
+.ls-count strong {
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.ls-heap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.ls-row {
+  display: flex;
+  gap: 6px;
+}
+
+.ls-stone,
+.ls-ghost {
+  width: clamp(26px, 8vw, 38px);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  transition:
+    transform 0.12s ease,
+    box-shadow 0.12s ease,
+    background 0.2s ease;
+}
+
+.ls-stone {
+  background: radial-gradient(circle at 35% 30%, #c9ced6 0%, #8a929e 45%, #50575f 100%);
+  box-shadow:
+    inset -2px -3px 5px rgba(0, 0, 0, 0.35),
+    0 2px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* A stone already taken. */
+.ls-ghost {
+  border: 1px dashed var(--line);
+}
+
+/* The stones of the most recent take, in the taker's colour. */
+.ls-ghost.ls-last {
+  border: 2px dashed currentColor;
+  background: color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.ls-by-p1 {
+  color: var(--blue);
+}
+
+.ls-by-p2 {
+  color: var(--red);
+}
+
+/* The opponent's take: ringed, so it reads as "what just happened". */
+.ls-ghost.ls-opp {
+  border-style: solid;
+  box-shadow: 0 0 0 3px #f1c40f55;
+}
+
+.ls-note {
+  margin: 0;
+  text-align: center;
+}
+
+.ls-note-opp {
+  color: #f1c40f;
+}
+
+/* Hovering "Take N" lifts the N stones it would take. */
+body:has(.ls-take[data-take="1"]:hover:not(:disabled)) .ls-d1,
+body:has(.ls-take[data-take="2"]:hover:not(:disabled)) :is(.ls-d1, .ls-d2),
+body:has(.ls-take[data-take="3"]:hover:not(:disabled)) :is(.ls-d1, .ls-d2, .ls-d3) {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 3px var(--accent),
+    0 6px 8px rgba(0, 0, 0, 0.5);
+}
+
+.actions .ls-take.ls-fatal .hint {
+  color: var(--red);
+}

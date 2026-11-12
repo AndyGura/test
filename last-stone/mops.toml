@@ -1,0 +1,17 @@
+[package]
+name = "last-stone"
+version = "0.1.0"
+description = "last-stone — a duel-game-core game"
+
+[dependencies]
+# duel-game-core is not on mops.one yet: a clone of research-ag/duel-core
+# next to this directory (README.md, "Build and test").
+duel-game-core = "../duel-core/backend"
+core = "2.6.2"
+promtracker = "1.0.1" # metrics at GET /metrics, wired by the Host template
+
+[canisters]
+backend = "src/Host.mo"
+
+[toolchain]
+moc = "2.0.0"
