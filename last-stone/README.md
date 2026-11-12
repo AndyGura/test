@@ -65,12 +65,30 @@ cd frontend && node play-test.mjs && cd ..
 
 ## Online
 
-Nothing of this game is on mainnet yet. A test copy runs on hosty.live's
-free cloud engine for development (its ids are in `CLAUDE.md`); it is not
-the game's address and may be deleted. Going live goes through
-hosty.live (the duel-game-core skill's `references/going-live.md`,
-section 3): buy a backend and a frontend canister, install the backend's
-module (`icp build backend`, then `.icp/cache/artifacts/backend`), and
-upload the zipped `frontend/dist` with the page's
-`PUBLIC_CANISTER_ID:backend` set to the backend's id. Every later backend
-upgrade first passes `cd frontend && node check-upgrade.mjs <backend-id>`.
+**Play: https://sqvma-nyaaa-aaaau-ahjha-cai.icp0.io/**
+
+The live game, on Internet Computer mainnet, deployed through hosty.live:
+
+| Canister | Id                            |                                                         |
+| -------- | ----------------------------- | ------------------------------------------------------- |
+| backend  | `szwh4-3qaaa-aaaau-ahjgq-cai` | `https://szwh4-3qaaa-aaaau-ahjgq-cai.raw.icp0.io/semantics` |
+| frontend | `sqvma-nyaaa-aaaau-ahjha-cai` | the page; its `PUBLIC_CANISTER_ID:backend` names the backend |
+
+The backend's module is in hosty.live's module store, so anyone can build
+their own frontend or bot for the game from its id.
+
+### Updating the live game
+
+Through hosty.live (the duel-game-core skill's `references/going-live.md`,
+section 3), with a deploy session the owner approves in the hosty.live web
+app:
+
+1. `mops test`, then the local checks above.
+2. `cd frontend && node check-upgrade.mjs szwh4-3qaaa-aaaau-ahjgq-cai`
+   must exit 0.
+3. `icp build backend`, then install `.icp/cache/artifacts/backend` on the
+   backend with `hosty_prepare_wasm_upload` and `snapshotBeforeUpgrade: true`.
+4. `cd frontend && npm run build && zip -r dist.zip dist -x "*.map"`, then
+   upload it to the frontend with `hosty_prepare_zip_upload` (`pureAssets`,
+   `outputDir: "dist"`).
+5. `cd frontend && node play-test.mjs szwh4-3qaaa-aaaau-ahjgq-cai --ic`.

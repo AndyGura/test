@@ -31,6 +31,8 @@ if (watch) {
 for (const [from, to] of [
   ['src/index.html', `${outdir}/index.html`],
   ['src/style.css', `${outdir}/style.css`],
+  ['src/robots.txt', `${outdir}/robots.txt`],
+  ['src/sitemap.xml', `${outdir}/sitemap.xml`],
   ['node_modules/@research-ag/duel-game-core/style.css', `${outdir}/duel-game-core.css`],
 ]) {
   cpSync(from, to, { recursive: true });
