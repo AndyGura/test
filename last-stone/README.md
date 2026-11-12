@@ -65,7 +65,9 @@ cd frontend && node play-test.mjs && cd ..
 
 ## Online
 
-Nothing of this game is on mainnet yet. Going live goes through
+Nothing of this game is on mainnet yet. A test copy runs on hosty.live's
+free cloud engine for development (its ids are in `CLAUDE.md`); it is not
+the game's address and may be deleted. Going live goes through
 hosty.live (the duel-game-core skill's `references/going-live.md`,
 section 3): buy a backend and a frontend canister, install the backend's
 module (`icp build backend`, then `.icp/cache/artifacts/backend`), and
