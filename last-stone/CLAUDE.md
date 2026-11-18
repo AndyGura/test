@@ -32,6 +32,13 @@ Keep the backend at 1 TC or more: with its ~200 MB of memory and the
 30-day freezing threshold, its timer stalls near 0.48 TC. No cloud engine
 test copy exists (hosty.live deleted the first one).
 
+History: installed 2026-11-12 (module `f07f5bbb…`); upgraded 2026-11-18 to
+the lazy sweep timer (module `9abda236…`, duel-core `cd3f163`) after a
+1 TC top-up, and the page to npm 0.5.1 (invite links). hosty.live took
+snapshot `00000000000000000000000002803a4d0101` (202 MB) right before that
+upgrade: the way back with `hosty_restore_snapshot`, and about 2 B cycles a
+day while it is kept.
+
 ## What the game runs
 
 - Mode: `#turnBased` (`State = { pile; toMove; lastTake }`, `View = State`,
