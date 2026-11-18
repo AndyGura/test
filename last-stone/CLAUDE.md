@@ -21,16 +21,16 @@ section 3), both canisters controlled by the user's hosty.live principal.
 `index.html`'s canonical, Open Graph and JSON-LD tags, `robots.txt` and
 `sitemap.xml` name the live frontend. Every change upgrades these two
 canisters (a deploy session each time): first `cd frontend && node
-check-upgrade.mjs szwh4-3qaaa-aaaau-ahjgq-cai`, then the backend with
+check-upgrade.mjs szwh4-3qaaa-aaaau-ahjgq-cai` (Node 24), then the backend with
 `hosty_prepare_wasm_upload` and `snapshotBeforeUpgrade: true`, the page
 with `hosty_prepare_zip_upload` (`pureAssets`, `dist`).
 
 Not listed on the Duel dashboard (https://games.ic0.info/) until the user
 registers the frontend there.
 
-Test copy on hosty.live's free cloud engine, not the game (may be deleted
-at any time; its ids never go into anything public): backend
-`fzhym-yyaaa-aaacl-aaaiq-cai`, frontend `fqetq-oqaaa-aaacl-aaaja-cai`.
+Keep the backend at 1 TC or more: with its ~200 MB of memory and the
+30-day freezing threshold, its timer stalls near 0.48 TC. No cloud engine
+test copy exists (hosty.live deleted the first one).
 
 ## What the game runs
 
@@ -39,9 +39,15 @@ at any time; its ids never go into anything public): backend
 - Bot support (the Host's and the page's BOTS lines): off.
 - Leaderboard (LEADERBOARD lines): off.
 - A bot canister: none.
+- Sweep timer: lazy (`sweeper = Transport.sweeper()` in the Host's
+  `env`): it runs only while a table or a waiting player exists, so
+  `canister_version` in `/metrics` stays flat while nobody plays.
+- Invite links: on, from the npm package. "Invite a friend" opens a
+  `#code` table whose waiting screen shares `#t=<id>&c=<code>`; the table
+  waits 30 minutes, and each seat's first move gets 10 extra minutes.
 - duel-game-core: path dependency `../duel-core/backend`, a clone of
-  research-ag/duel-core at `e185751` (not on mops.one yet), and
-  `@research-ag/duel-game-core` 0.4.1 (npm).
+  research-ag/duel-core at `cd3f163` (not on mops.one yet), and
+  `@research-ag/duel-game-core` 0.5.1 (npm).
 
 ## Working here
 
@@ -52,6 +58,8 @@ at any time; its ids never go into anything public): backend
   (against an online backend).
 - `icp build` needs `ic-wasm` on the PATH (`cargo install ic-wasm --locked`).
 - Before upgrading the backend: `cd frontend && node check-upgrade.mjs
-<backend-id>` must exit 0.
+<backend-id>` must exit 0. Run it with Node 24 or later (`/opt/node24/bin/node`
+in a cloud session): Node 22 cannot read the live 64-bit Motoko module and
+crashes with "invalid table elements limits flags", which is not a verdict.
 - A change to `View`, `Action`, `Options` or the rules updates
   `SEMANTICS` in the same change.

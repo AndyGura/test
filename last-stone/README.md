@@ -27,7 +27,8 @@ The backend serves its rules for third-party frontends and bots at
 
 ## Build and test
 
-Tools: `icp` (icp-cli 1.8.0), `mops` 3.4.1 or later, Node 22, and
+Tools: `icp` (icp-cli 1.8.0), `mops` 3.4.1 or later, Node 22 (Node 24 or
+later for `check-upgrade.mjs`, which reads the live 64-bit module), and
 `ic-wasm` (`cargo install ic-wasm --locked`), which the Motoko recipe
 in `icp.yaml` calls.
 
@@ -85,7 +86,7 @@ app:
 
 1. `mops test`, then the local checks above.
 2. `cd frontend && node check-upgrade.mjs szwh4-3qaaa-aaaau-ahjgq-cai`
-   must exit 0.
+   (Node 24 or later) must exit 0, and the backend must hold at least 1 TC.
 3. `icp build backend`, then install `.icp/cache/artifacts/backend` on the
    backend with `hosty_prepare_wasm_upload` and `snapshotBeforeUpgrade: true`.
 4. `cd frontend && npm run build && zip -r dist.zip dist -x "*.map"`, then
